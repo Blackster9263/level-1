@@ -45,7 +45,7 @@ No Convex account yet? The original laptop demo is the runnable keyless prototyp
    - `PULSEPREP_CONVEX_URL`: production `.convex.cloud` URL
    - `PULSEPREP_CONVEX_SITE_URL`: matching production `.convex.site` URL
    - `PULSEPREP_SITE_URL`: exact public HTTPS frontend origin
-4. Run `npm test`, `npm run typecheck`, then `npm run build`. Keep the starter's Sites/Vinext Worker build integration. This app is not a static-only Pages export; same-origin API/auth routes need a Worker.
+4. Run `npm test`, `npm run typecheck`, then build with `NEXT_PUBLIC_CONVEX_URL` set to the **same production Convex URL** as `PULSEPREP_CONVEX_URL`. The official Better Auth Next.js server adapter uses this build-time variable for authenticated function calls; leaving a development URL in the build makes interviews fail even when browser sign-in works. In PowerShell, set `$env:NEXT_PUBLIC_CONVEX_URL = 'https://tidy-snake-567.ca-central-1.convex.cloud'` immediately before `npm run build`. Set that public URL in the hosting environment too. Keep the starter's Sites/Vinext Worker build integration. This app is not a static-only Pages export; same-origin API/auth routes need a Worker.
 5. Publish the verified Worker using the connected Sites workflow, retaining `.openai/hosting.json`'s registered Site ID. Set public access only for the final release. Don't publish a setup-only screen as a completed product.
 6. Verify anonymous reachability, sign-up, sign-in, interview, report/PDF, refresh, sign-out, cross-user denial and history deletion on the actual HTTPS deployment.
 

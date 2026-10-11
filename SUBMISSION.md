@@ -31,6 +31,7 @@ Check the final submission handoff for live verification and repository upload s
 - Public GitHub repository metadata import with review before use.
 - Manual LinkedIn experience and LeetCode topic references.
 - Responsive interface and a Cloudflare Worker frontend/API.
+- Light/dark mode with an initial system preference and a remembered browser choice.
 
 ## Architecture
 

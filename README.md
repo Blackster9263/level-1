@@ -2,6 +2,8 @@
 
 Interview practice with six role paths, practice/full-mock modes, structured illustrative feedback, saved reports, PDF export and optional project/topic references.
 
+Light and dark themes follow your system preference initially. Use the theme button at the top to choose a mode; the preference stays in this browser across reloads and sign-in. Printed reports remain light for readability.
+
 **Stack:** React + Vinext on Cloudflare Workers, Convex, Better Auth. No Netlify, D1 or paid AI dependency. This is separate from the unchanged laptop demo in `../level-1`.
 
 ## Hackathon release

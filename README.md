@@ -8,7 +8,7 @@ Light and dark themes follow your system preference initially. Use the theme but
 
 ## Hackathon release
 
-Frontend address: [Open PulsePrep](https://pulseprep-blackster9263.spry-haven-6235.chatgpt.site).
+Frontend address: [Open PulsePrep](https://pulseprep.spry-haven-6235.chatgpt.site).
 
 The production Convex backend is deployed in **Canada (Central)** as `canada-production`, with Better Auth and account-owned interview records. See [SUBMISSION.md](SUBMISSION.md) for the pitch, demonstration steps and honest feature boundaries. A registered frontend address alone does not prove publication; the submission handoff reports the verified deployment result.
 
@@ -51,7 +51,7 @@ No Convex account yet? The original laptop demo is the runnable keyless prototyp
 5. Publish the verified Worker using the connected Sites workflow, retaining `.openai/hosting.json`'s registered Site ID. Set public access only for the final release. Don't publish a setup-only screen as a completed product.
 6. Verify anonymous reachability, sign-up, sign-in, interview, report/PDF, refresh, sign-out, cross-user denial and history deletion on the actual HTTPS deployment.
 
-The registered frontend origin is `https://pulseprep-blackster9263.spry-haven-6235.chatgpt.site`; registration alone does **not** mean it is live. If the hosting origin changes, update both the backend `SITE_URL` and frontend `PULSEPREP_SITE_URL` together.
+The live frontend origin is `https://pulseprep.spry-haven-6235.chatgpt.site`. Both the backend `SITE_URL` and frontend `PULSEPREP_SITE_URL` use this address; sign-in and existing saved reports were verified after the rename. If the hosting origin changes again, update both settings together.
 
 To preview the built Worker locally: `npm start -- --port 8787`. This does not deploy anything. Its configured frontend origin must match the preview URL, including its port.
 

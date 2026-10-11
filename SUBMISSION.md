@@ -6,7 +6,7 @@ Practice role-specific interviews, turn your project experience into discussion 
 
 ## Project links
 
-- Frontend: https://pulseprep-blackster9263.spry-haven-6235.chatgpt.site
+- Frontend: https://pulseprep.spry-haven-6235.chatgpt.site
 - Submission repository: https://github.com/Blackster9263/level-1
 - Backend: Convex, Canada (Central), named production deployment `canada-production`.
 

@@ -1,0 +1,15 @@
+export type QuestionType = 'technical' | 'behavioral';
+export type Source = 'llm' | 'cache';
+export type Scores = {clarity:number; relevance:number; domain:number; communication:number; star:number|null};
+export type Evaluation = {text:string; wordCount:number; scores:Scores; answerScore:number; feedback:string; improvementTip:string; modelAnswer:string; promptVersion:string; source:Source};
+export const CODING_TOPICS = {arrays:'Arrays',hashing:'Hash maps',strings:'Strings',trees:'Trees',graphs:'Graphs',dp:'Dynamic programming'} as const;
+export type CodingTopic = keyof typeof CODING_TOPICS;
+export type GithubReference = {username:string;fetchedAt:string;repos:{name:string;description:string;language:string|null;url:string}[]};
+export type ReferenceContext = {github:GithubReference|null;linkedinSkills:string;leetcodeTopics:CodingTopic[]};
+export type ReferenceInput = {consent:true;githubUsername:string;githubSnapshotId?:string;linkedinSkills:string;leetcodeTopics:CodingTopic[]};
+export type Question = {id:string; position:number; type:QuestionType; text:string; status:'pending'|'answered'|'skipped'; answer?:Evaluation|null; sampleAnswer?:string; reference?:string};
+export type Session = {id:string; roleId:string; level:'fresher'|'0-1'; mode:'practice'|'full'; status:'in_progress'|'completed'; source:Source; createdAt:string; completedAt:string|null; current:number; questions:Question[];references?:ReferenceContext|null};
+export type Readiness = {label:string; tone:'warning'|'good'|'success'};
+export type Report = {id:string; sessionId:string; overall:number; readiness:Readiness; averages:Scores; tips:string[]; answered:number; skipped:number; unanswered:number; previousScore:number|null; session:Session};
+export type Role = {id:string; title:string; description:string; icon:string; questions:{id:string; type:string; text:string; concepts:string[]; modelAnswer:string; sampleAnswer:string;reference?:string}[]};
+export const DIMENSIONS = {clarity:'Clarity & structure', relevance:'Role relevance', domain:'Domain knowledge', communication:'Communication', star:'STAR method'} as const;

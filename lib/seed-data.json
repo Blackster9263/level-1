@@ -1,0 +1,595 @@
+[
+  {
+    "id": "software_engineer",
+    "title": "Software Engineer",
+    "description": "Solve problems, write code, and build products.",
+    "icon": "code",
+    "color": "#7C3AED",
+    "questions": [
+      {
+        "id": "se_duplicate_ids",
+        "type": "technical",
+        "text": "A placement portal receives a list of student IDs and must flag duplicates. How would you solve this efficiently, explain its complexity, and test it?",
+        "concepts": [
+          "hash set",
+          "time complexity",
+          "space complexity",
+          "edge cases",
+          "input validation"
+        ],
+        "modelAnswer": "I would scan the IDs once and keep a hash set of values already seen. If an ID is in the set, I would record it as a duplicate; otherwise, I would add it. A second set can ensure each duplicate is reported once. With typical hash table behavior, the expected running time is O(n), and extra space is O(n). If memory is constrained, sorting first offers a different tradeoff. I would clarify whether IDs are case sensitive, validate missing values, and test empty input, repeated IDs, and a list with no duplicates.",
+        "sampleAnswer": "Illustrative answer: I would use a hash set to remember student IDs during one pass. An ID already present is a duplicate, and a second set avoids repeated output. Expected time complexity is O(n), and space complexity is O(n). For input validation, I would confirm case sensitivity and missing IDs. Edge cases include an empty list, all unique IDs, and the same ID appearing three times."
+      },
+      {
+        "id": "se_debug_story",
+        "type": "behavioral",
+        "text": "Describe how you would investigate a difficult bug in a student project while keeping teammates informed. Use a clearly illustrative STAR example if you have no real experience.",
+        "concepts": [
+          "reproduction",
+          "debugging",
+          "root cause",
+          "communication",
+          "regression testing"
+        ],
+        "modelAnswer": "Situation: In a hypothetical college project, the registration page occasionally saved the same student twice. Task: My responsibility would be to identify the cause and protect data before a demonstration. Action: I would reproduce rapid double clicks, inspect requests and database records, and share a concise investigation update. After identifying duplicate submissions, I would propose server validation and a uniqueness constraint, with a disabled submit button for feedback. Result: In this illustrative scenario, repeat submissions would be rejected consistently, a regression test would document the fix, and teammates would understand both the cause and prevention.",
+        "sampleAnswer": "In an illustrative student project, registration sometimes creates duplicate records. My task would be to reproduce the issue before the demo. I would inspect repeated requests, identify missing uniqueness protection, and explain the finding to teammates. I would add a database constraint and regression test. The intended result would be reliable rejection of duplicates and a documented fix the team can maintain."
+      },
+      {
+        "id": "se_database_design",
+        "type": "technical",
+        "text": "Design basic tables for students applying to jobs. Explain primary keys, foreign keys, normalization, and when an index would help.",
+        "concepts": [
+          "primary key",
+          "foreign key",
+          "normalization",
+          "composite constraint",
+          "index"
+        ],
+        "modelAnswer": "I would create Students, Jobs, and Applications tables. Each entity would have a stable primary key, and Applications would reference the student and job through foreign keys. Keeping student contact details in Students avoids repeating them for every application and reduces update anomalies. A unique constraint on student_id and job_id would prevent duplicate applications. An index on job_id could help retrieve applicants for a particular opening, depending on query patterns and table size. Indexes consume storage and add write overhead, so I would inspect actual queries and execution plans before adding many of them.",
+        "sampleAnswer": "Illustrative answer: Students and Jobs would each have a primary key. Applications would store foreign keys to both, plus status and application date. A unique pair of student_id and job_id prevents duplicate applications. Separating student details avoids inconsistent copies. I would consider an index on job_id for applicant searches, while checking query plans because indexes cost storage and slow some writes."
+      },
+      {
+        "id": "se_api_design",
+        "type": "technical",
+        "text": "How would you design a small API endpoint that creates a job application and handles invalid input, duplicate requests, and unauthorized access?",
+        "concepts": [
+          "HTTP status",
+          "validation",
+          "authentication",
+          "authorization",
+          "idempotency",
+          "parameterized query"
+        ],
+        "modelAnswer": "I would use a POST endpoint with an authenticated student identity and a validated job identifier. Authentication establishes who is calling, while authorization checks whether that student may apply to that opening. The server must validate input even if the browser already does. I would use parameterized database queries and enforce uniqueness for the student and job pair. A successful creation could return 201 with the application identifier; malformed input could return 400, and a duplicate could return 409. An idempotency key can make retries predictable. Logs should help diagnose failures without exposing sensitive student information.",
+        "sampleAnswer": "Illustrative answer: I would accept a POST request, authenticate the student, and check eligibility for the job. Server validation and parameterized queries protect the database boundary. A uniqueness constraint prevents two applications for the same pair. I would return 201 for creation and 409 for a duplicate, and consider an idempotency key for safe retries after a network timeout."
+      },
+      {
+        "id": "se_team_tradeoff",
+        "type": "behavioral",
+        "text": "Two teammates disagree about adding a new library just before a project deadline. How would you help the team decide and move forward?",
+        "concepts": [
+          "tradeoff",
+          "active listening",
+          "scope",
+          "prototype",
+          "teamwork"
+        ],
+        "modelAnswer": "Situation: In a hypothetical final semester project, two teammates disagree about replacing a working form with a new library shortly before submission. Task: I would help the team choose an approach that meets requirements and preserves delivery time. Action: I would ask each teammate to explain the problem, compare accessibility, validation needs, learning effort, and integration risk, then try a small example if uncertainty remains. I would document the decision and divide the remaining tasks fairly. Result: The illustrative outcome would be an evidence based choice, a completed form, and a clear backlog item for any deferred improvement.",
+        "sampleAnswer": "In a hypothetical project, teammates disagree about a last minute form library. My task would be to turn the disagreement into a decision. I would compare the actual requirements, integration effort, accessibility, and deadline, then test the uncertain part briefly. The intended result would be one documented approach, clear ownership, and a working submission without dismissing either teammate's concerns."
+      },
+      {
+        "id": "se_testing",
+        "type": "technical",
+        "text": "A function calculates a cart total after a percentage discount. What tests and design choices would give you confidence that it works correctly?",
+        "concepts": [
+          "unit test",
+          "boundary value",
+          "rounding",
+          "validation",
+          "integration test"
+        ],
+        "modelAnswer": "I would first clarify whether the discount applies before tax, how currency is rounded, and which discount values are allowed. For the calculation itself, I would test an empty cart, one item, multiple quantities, zero discount, full discount if permitted, and invalid negative prices or excessive discounts. I would represent money using integer minor units or an appropriate decimal approach and define rounding explicitly. Unit tests should check the pure calculation, while an integration test should verify that checkout passes the expected values. Clear requirements matter because a passing test can still encode an incorrect business rule.",
+        "sampleAnswer": "Illustrative answer: I would clarify tax order and rounding before writing tests. Then I would cover an empty cart, multiple quantities, zero discount, the maximum allowed discount, and invalid values. I would avoid careless floating point currency calculations by using integer minor units with explicit rounding. A checkout integration test would confirm the calculation receives the correct prices and quantities."
+      }
+    ],
+    "sampleAnswers": [
+      "Illustrative answer: I would use a set to remember student IDs during one pass. An ID already present is a duplicate, and a second set avoids repeated duplicate output. Expected time is O(n), with O(n) extra memory. I would confirm case sensitivity and test an empty list, one student, all unique IDs, and the same ID appearing three times.",
+      "In an illustrative student project, registration sometimes creates duplicate records. My task would be to reproduce the issue before the demo. I would inspect repeated requests, identify missing uniqueness protection, and explain the finding to teammates. I would add a database constraint and regression test. The intended result would be reliable rejection of duplicates and a documented fix the team can maintain."
+    ]
+  },
+  {
+    "id": "data_analyst",
+    "title": "Data Analyst",
+    "description": "Work with data to find insights and tell stories.",
+    "icon": "database",
+    "color": "#0891B2",
+    "questions": [
+      {
+        "id": "da_sql_zero_counts",
+        "type": "technical",
+        "text": "You have students(id, name) and applications(id, student_id). How would SQL count applications for every student, including students with none?",
+        "concepts": [
+          "LEFT JOIN",
+          "COUNT",
+          "GROUP BY",
+          "NULL",
+          "join cardinality"
+        ],
+        "modelAnswer": "I would start from students and LEFT JOIN applications on the student identifier, then group by the student key. The query is SELECT s.id, COUNT(a.id) AS applications FROM students s LEFT JOIN applications a ON a.student_id = s.id GROUP BY s.id. COUNT(a.id) ignores the NULL produced when a student has no matching application, so that student receives zero. COUNT(*) would incorrectly count the preserved student row as one. I would verify that application IDs are unique and check a student with no applications, one application, and several applications before trusting the result.",
+        "sampleAnswer": "Illustrative answer: I would LEFT JOIN applications to students and group by student ID. Using COUNT(a.id), rather than COUNT(*), gives zero when the join produces a NULL application ID. I would check students with zero, one, and several applications. If another table is joined later, I would also check whether it multiplies rows and inflates the counts."
+      },
+      {
+        "id": "da_messy_data_story",
+        "type": "behavioral",
+        "text": "A student club gives you a messy event attendance spreadsheet and needs a reliable summary tomorrow. How would you organize the work and explain its limitations?",
+        "concepts": [
+          "data quality",
+          "deduplication",
+          "audit trail",
+          "prioritization",
+          "stakeholder communication"
+        ],
+        "modelAnswer": "Situation: In a hypothetical student club assignment, attendance records contain inconsistent dates and repeated registrations, with a summary needed the next day. Task: I would produce a defensible count and explain unresolved uncertainty. Action: I would preserve the original file, agree on what counts as attendance, standardize dates, and flag possible duplicates using student ID and event ID. I would compare totals before and after cleaning and ask the organizer about ambiguous records. Result: The illustrative deliverable would be a reproducible summary with a cleaning log, clearly labelled exclusions, and limitations that prevent a misleading attendance claim.",
+        "sampleAnswer": "In a hypothetical club project, attendance data has repeated registrations and mixed date formats. I would first confirm whether registration or actual attendance is required. I would preserve the source, standardize dates, review duplicate student and event pairs, and record exclusions. The intended result would be a useful summary delivered on time, with uncertain records and assumptions clearly disclosed."
+      },
+      {
+        "id": "da_experiment_bias",
+        "type": "technical",
+        "text": "Students who attended an interview workshop have a higher placement rate. Can you conclude that the workshop caused the improvement? How would you investigate?",
+        "concepts": [
+          "selection bias",
+          "confounding",
+          "randomization",
+          "sample size",
+          "confidence interval"
+        ],
+        "modelAnswer": "The association alone does not establish causation. More motivated students or students with stronger prior skills may be more likely to attend, creating selection bias and confounding. I would check how attendance and placement are defined, compare baseline characteristics, and examine missing outcomes and sample sizes. A randomized invitation or assignment, when practical and appropriate, would provide stronger evidence than an uncontrolled comparison. I would report the estimated difference with uncertainty, such as a confidence interval, and distinguish statistical significance from practical importance. If only observational data exists, I would describe the limitations and avoid claiming the workshop caused placements.",
+        "sampleAnswer": "Illustrative answer: A higher placement rate among attendees shows an association, but attendees may already differ in motivation or skills. I would inspect baseline differences, missing outcomes, and sample sizes. Random assignment would strengthen a causal conclusion. With observational data, I would report the difference and its uncertainty, mention selection bias, and avoid promising that attending the workshop guarantees better placement."
+      },
+      {
+        "id": "da_dashboard_metrics",
+        "type": "technical",
+        "text": "Design a small placement dashboard for a college coordinator. Which metrics, filters, and charts would you choose, and how would you avoid misleading comparisons?",
+        "concepts": [
+          "denominator",
+          "conversion rate",
+          "cohort",
+          "data freshness",
+          "visualization"
+        ],
+        "modelAnswer": "I would begin with the coordinator's decisions, then show eligible students, students with at least one offer, placement rate, and stage conversion rates. Each rate needs a stated denominator and reporting period. I would use a trend line for changes over time and bars for comparable departments, with cohort size visible. Filters could include graduation year, department, and recruitment stage. I would distinguish unique students from total offers, identify missing records, and display the last refresh time. Comparisons should use consistent eligibility rules and cohorts, because a changing denominator can create an apparent improvement without better outcomes.",
+        "sampleAnswer": "Illustrative answer: I would show eligible students, unique students placed, placement rate, and conversion through recruitment stages. Every rate would state its denominator and period. Department bars and a time trend would support comparison, with cohort sizes and refresh time visible. I would separate offer counts from student counts and check consistent eligibility rules before interpreting a department's performance."
+      },
+      {
+        "id": "da_error_disclosure",
+        "type": "behavioral",
+        "text": "After sharing an analysis, you discover a join doubled some totals. How would you correct the finding and rebuild confidence in your work?",
+        "concepts": [
+          "accountability",
+          "join cardinality",
+          "validation",
+          "impact assessment",
+          "communication"
+        ],
+        "modelAnswer": "Situation: In a hypothetical internship exercise, a report overstates application totals because a join duplicates rows. Task: I would correct the analysis promptly and make its impact understandable. Action: I would reproduce the error, compare totals against the source, and identify which charts and conclusions are affected. I would notify the reviewer with a clear explanation, issue a corrected report, and add checks for unique keys and expected row counts. Result: In this illustrative scenario, the decision would use corrected figures, the correction would remain traceable, and future reports would include safeguards against the same mistake.",
+        "sampleAnswer": "In an illustrative internship exercise, I discover that a join inflated a shared report. I would verify the error, identify affected conclusions, and promptly tell the reviewer what changed. I would replace the figures with a clearly marked correction and reconcile totals to the source. The intended result would be accurate decisions and repeatable checks on join cardinality before future reports."
+      },
+      {
+        "id": "da_cleaning_workflow",
+        "type": "technical",
+        "text": "A CSV contains blank salaries, duplicate candidate rows, and inconsistent department names. Describe a reproducible cleaning workflow without inventing missing information.",
+        "concepts": [
+          "missing data",
+          "deduplication",
+          "standardization",
+          "outlier",
+          "reproducibility",
+          "validation"
+        ],
+        "modelAnswer": "I would preserve the raw CSV and inspect types, missing values, unique identifiers, and summary statistics before changing anything. Department variants could be mapped through a documented reference table, while uncertain matches would be flagged for review. I would define duplicates using a suitable business key rather than deleting every repeated name. Missing salary is not automatically zero, and imputation requires a justified purpose and a disclosed method. I would investigate unusual values instead of silently removing them. Finally, I would record each transformation, reconcile row counts, validate accepted ranges, and produce a cleaned dataset with a concise quality report.",
+        "sampleAnswer": "Illustrative answer: I would keep the original CSV, profile its columns, and document cleaning rules. Department names would use an approved mapping. Duplicate candidates would be checked using identifiers because names alone are unreliable. Blank salaries would remain missing unless a justified imputation rule is agreed. I would reconcile row counts, review outliers, and keep a transformation log so the result can be reproduced."
+      }
+    ],
+    "sampleAnswers": [
+      "Illustrative answer: I would LEFT JOIN applications to students and group by student ID. Using COUNT(a.id), rather than COUNT(*), gives zero when the join produces a NULL application ID. I would check students with zero, one, and several applications. If another table is joined later, I would also check whether it multiplies rows and inflates the counts.",
+      "In a hypothetical club project, attendance data has repeated registrations and mixed date formats. I would first confirm whether registration or actual attendance is required. I would preserve the source, standardize dates, review duplicate student and event pairs, and record exclusions. The intended result would be a useful summary delivered on time, with uncertain records and assumptions clearly disclosed."
+    ]
+  },
+  {
+    "id": "business_analyst",
+    "title": "Business Analyst",
+    "description": "Bridge business needs with technical solutions.",
+    "icon": "briefcase",
+    "color": "#D97706",
+    "questions": [
+      {
+        "id": "ba_requirements",
+        "type": "technical",
+        "text": "A placement officer asks for a 'better application tracker.' How would you turn that vague request into requirements and testable acceptance criteria?",
+        "concepts": [
+          "stakeholder",
+          "user story",
+          "acceptance criteria",
+          "scope",
+          "requirement"
+        ],
+        "modelAnswer": "I would ask who uses the tracker, what decisions they make, and where the current process causes difficulty. I would review a real workflow and distinguish needs from proposed features. A user story could be: As a student, I want to see my application status so I know the next action. Acceptance criteria would define allowed statuses, who may update them, visibility rules, and behavior when no applications exist. I would confirm scope, constraints, and priorities with the placement officer, then use a simple example or sketch to check shared understanding before development begins.",
+        "sampleAnswer": "Illustrative answer: I would interview students and the placement officer, observe the current workflow, and identify the main pain points. I would turn the agreed need into a user story with acceptance criteria for statuses, update permissions, and empty results. A quick sketch would help confirm understanding. I would also record what is outside scope and how success will be measured."
+      },
+      {
+        "id": "ba_conflicting_stakeholders",
+        "type": "behavioral",
+        "text": "Students want instant application updates, but the placement team worries about extra administrative work. How would you handle the conflicting needs?",
+        "concepts": [
+          "stakeholder alignment",
+          "active listening",
+          "tradeoff",
+          "facilitation",
+          "decision log"
+        ],
+        "modelAnswer": "Situation: In a hypothetical campus portal project, students request instant status updates while coordinators worry about maintaining another system. Task: I would help both groups agree on a useful and manageable workflow. Action: I would interview each group, map when statuses actually change, and compare options such as batch updates or automatic notifications from existing records. I would discuss effort, accuracy, and student benefit, then document the agreed owner and update frequency. Result: The illustrative outcome would be a shared requirement with realistic service expectations, less repeated follow up, and a decision log that explains the compromise.",
+        "sampleAnswer": "In a hypothetical campus project, students want immediate updates and coordinators fear duplicate work. I would listen to both groups and map when trustworthy status information becomes available. I would compare batch updates with notifications from existing records, then document ownership and timing. The intended result would be a practical agreement that improves visibility while fitting the team's capacity."
+      },
+      {
+        "id": "ba_process_mapping",
+        "type": "technical",
+        "text": "A college takes five days to approve event requests. How would you map the process, locate delays, and propose a measurable improvement?",
+        "concepts": [
+          "process mapping",
+          "bottleneck",
+          "handoff",
+          "cycle time",
+          "root cause"
+        ],
+        "modelAnswer": "I would map the current process from submission to final approval, including actors, decisions, handoffs, and rework. I would collect timestamps to separate time spent actively reviewing from time waiting in queues. Interviews and a sample of requests could reveal missing information, unclear ownership, or an unnecessary approval step. I would confirm the root cause before proposing a future process, such as a complete submission checklist and a clear review owner. Success could be measured through median approval time, rework rate, and requests awaiting action. A small pilot would test the change before wider adoption.",
+        "sampleAnswer": "Illustrative answer: I would draw the current request flow, identify each owner, and measure waiting time as well as review time. If incomplete submissions cause repeated handoffs, I would propose a checklist and clear ownership. I would pilot the revised process and compare median approval time and rework rate, checking that faster approval still preserves the necessary review."
+      },
+      {
+        "id": "ba_sql_funnel",
+        "type": "technical",
+        "text": "A manager says application-to-interview conversion dropped. How would you define the metric, use SQL to investigate it, and avoid a misleading conclusion?",
+        "concepts": [
+          "conversion rate",
+          "SQL",
+          "cohort",
+          "COUNT DISTINCT",
+          "selection bias",
+          "denominator"
+        ],
+        "modelAnswer": "I would define conversion as eligible applications reaching interview divided by eligible applications in a specified cohort, with enough time for outcomes to mature. I would confirm how withdrawn and pending applications are handled. In SQL, I would group by application cohort and count distinct application IDs, checking joins for duplicate rows. I would compare role mix, recruitment stage timing, and missing statuses before attributing the change to process quality. Recent cohorts may appear worse simply because interviews have not occurred yet. I would present the evidence and remaining uncertainty, including any selection bias in the available records.",
+        "sampleAnswer": "Illustrative answer: I would agree on the denominator, interview definition, and application cohort before comparing rates. SQL would count distinct application IDs and check for duplicated joins. I would separate pending outcomes and compare similar roles over a fair time window. A recent cohort may not have matured, so I would investigate timing and selection bias before blaming the recruitment process."
+      },
+      {
+        "id": "ba_scope_change",
+        "type": "behavioral",
+        "text": "A stakeholder adds a new report two days before a student project demonstration. How would you respond without losing sight of the original goal?",
+        "concepts": [
+          "change impact",
+          "prioritization",
+          "scope",
+          "negotiation",
+          "traceability"
+        ],
+        "modelAnswer": "Situation: In a hypothetical student project, a stakeholder requests a department report two days before the demonstration. Task: I would assess the request while protecting the agreed demonstration outcome. Action: I would clarify the decision the report supports, identify data and development dependencies, and estimate the effect on existing commitments. I would present options, such as a simple export now or the full report in a later iteration, and seek a clear priority decision. Result: The illustrative outcome would be an agreed scope, updated acceptance criteria, and a traceable decision that keeps the team and stakeholder aligned.",
+        "sampleAnswer": "In a hypothetical project, a new report is requested just before the demo. I would clarify its purpose, assess dependencies, and explain the effect on committed work. I would offer a small export or a later full report, depending on priority. The intended result would be an explicit scope decision, updated expectations, and a demonstration focused on the agreed goal."
+      },
+      {
+        "id": "ba_uat_priority",
+        "type": "technical",
+        "text": "How would you prioritize features for a first release of an internship portal and prepare user acceptance testing for the features selected?",
+        "concepts": [
+          "MoSCoW",
+          "business value",
+          "dependency",
+          "user acceptance testing",
+          "traceability"
+        ],
+        "modelAnswer": "I would compare features by user value, urgency, effort, risk, and dependencies, then agree on must have, should have, could have, and will not have this time categories. Login, searching suitable openings, and submitting an application might be essential, while optional visual customization could wait. Every selected requirement should have clear acceptance criteria. User acceptance testing would use realistic student and coordinator scenarios, expected outcomes, and appropriate test data, including permission and failure cases. I would link results back to requirements, record defects and their impact, and obtain an explicit release decision from the responsible stakeholders.",
+        "sampleAnswer": "Illustrative answer: I would prioritize by business value, risk, effort, and dependencies, using MoSCoW to make the first release scope explicit. I would turn acceptance criteria into realistic student and coordinator test scenarios. Tests would include permissions and unsuccessful actions as well as successful applications. Results and defects would link back to requirements so stakeholders can make an informed release decision."
+      }
+    ],
+    "sampleAnswers": [
+      "Illustrative answer: I would interview students and the placement officer, observe the current workflow, and identify the main pain points. I would turn the agreed need into a user story with acceptance criteria for statuses, update permissions, and empty results. A quick sketch would help confirm understanding. I would also record what is outside scope and how success will be measured.",
+      "In a hypothetical campus project, students want immediate updates and coordinators fear duplicate work. I would listen to both groups and map when trustworthy status information becomes available. I would compare batch updates with notifications from existing records, then document ownership and timing. The intended result would be a practical agreement that improves visibility while fitting the team's capacity."
+    ]
+  },
+  {
+    "id": "frontend_developer",
+    "title": "Frontend Developer",
+    "description": "Build modern, responsive user interfaces.",
+    "icon": "layout",
+    "color": "#2563EB",
+    "questions": [
+      {
+        "id": "fe_accessible_form",
+        "type": "technical",
+        "text": "How would you build an accessible sign-in form using semantic HTML and React? Explain labels, keyboard support, validation, and error feedback.",
+        "concepts": [
+          "semantic HTML",
+          "label",
+          "keyboard",
+          "focus",
+          "aria-describedby",
+          "validation"
+        ],
+        "modelAnswer": "I would use a form element, explicitly associated labels, suitable input types, autocomplete values, and a real submit button. Native controls provide useful keyboard behavior and semantics. In React, controlled inputs can hold field values, while submission handles validation and the request. Placeholders should supplement labels rather than replace them. Field errors should use clear text, be associated with inputs through aria-describedby, and set aria-invalid when appropriate. I would preserve visible focus and announce submission feedback with a suitable live region. Finally, I would test tab order, Enter submission, screen reader labels, and server error handling.",
+        "sampleAnswer": "Illustrative answer: I would use a native form with labels linked to inputs, appropriate autocomplete, and a submit button. React state would hold values and submission status. Validation errors would be textual, connected with aria-describedby, and reflected by aria-invalid. I would keep visible focus and test keyboard submission, tab order, screen reader labels, and failure feedback."
+      },
+      {
+        "id": "fe_accessibility_story",
+        "type": "behavioral",
+        "text": "During a project review, someone cannot use your interface with a keyboard. How would you respond and prevent similar problems?",
+        "concepts": [
+          "accessibility",
+          "empathy",
+          "keyboard testing",
+          "semantic control",
+          "regression"
+        ],
+        "modelAnswer": "Situation: In a hypothetical student project review, a reviewer cannot open a menu using only a keyboard. Task: I would restore access to that interaction and understand why the team missed it. Action: I would reproduce the issue, replace the clickable generic element with an appropriate button, check focus behavior, and verify that the expanded state is communicated. I would invite the reviewer to retry and add keyboard checks to the team's review checklist. Result: The illustrative outcome would be an operable menu, clearer feedback for assistive technology, and a repeatable accessibility check for later components.",
+        "sampleAnswer": "In a hypothetical review, a menu works with a mouse but fails with a keyboard. I would acknowledge the barrier, reproduce it, and use an appropriate button with clear focus and expanded state. I would test the complete keyboard flow and ask the reviewer to retry. The intended result would be a usable interaction and a shared accessibility checklist."
+      },
+      {
+        "id": "fe_react_state",
+        "type": "technical",
+        "text": "In a React task list, how would you manage tasks and a search filter, update state safely, and choose keys when rendering items?",
+        "concepts": [
+          "state",
+          "derived data",
+          "immutability",
+          "functional update",
+          "stable key"
+        ],
+        "modelAnswer": "I would store the task collection and search text in state, then derive the visible tasks during rendering instead of keeping a second synchronized list. State updates should create new arrays and objects rather than mutate existing values. When the next state depends on the previous state, I would use a functional updater, such as appending to the previous tasks. Rendered items should use stable task identifiers as keys, especially if items can move or be removed. Array indexes can associate state with the wrong item after reordering. This design keeps the source of truth clear and makes updates predictable.",
+        "sampleAnswer": "Illustrative answer: I would keep tasks and search text in state, then calculate the filtered list during rendering. I would update arrays immutably and use a functional updater when an update depends on previous tasks. Each task would have a stable ID for its React key. Index keys are risky when insertion, deletion, or reordering can change an item's position."
+      },
+      {
+        "id": "fe_async_search",
+        "type": "technical",
+        "text": "A React page fetches jobs when a search term changes. How would you handle loading, empty results, errors, and out-of-order responses?",
+        "concepts": [
+          "useEffect",
+          "fetch",
+          "AbortController",
+          "race condition",
+          "loading state",
+          "HTTP status"
+        ],
+        "modelAnswer": "I would model loading, successful results, empty results, and errors explicitly so users know what is happening. An effect can fetch data when the search term changes and clean up the previous request. AbortController can cancel an obsolete fetch, while a request identity or ignored response flag can prevent stale responses from updating state. I would check response.ok because fetch does not reject solely for HTTP error statuses. Cancellation should not appear as a user facing failure. I would also prevent older requests from clearing the latest loading indicator, and test rapid typing, slow networks, failed requests, and no matches.",
+        "sampleAnswer": "Illustrative answer: I would show distinct loading, empty, error, and results states. An effect would fetch for the search term and cancel obsolete requests during cleanup. I would guard against stale responses, check response.ok, and treat cancellation separately from failure. Rapid typing and delayed responses would be useful tests because older results must not replace the newest search."
+      },
+      {
+        "id": "fe_feedback_deadline",
+        "type": "behavioral",
+        "text": "A teammate finds your responsive layout difficult to use on a small phone just before a demo. How would you evaluate and act on that feedback?",
+        "concepts": [
+          "responsive design",
+          "prioritization",
+          "collaboration",
+          "usability",
+          "verification"
+        ],
+        "modelAnswer": "Situation: In a hypothetical placement portal project, a teammate reports that the apply button disappears off screen on a small phone before a demo. Task: I would protect the core application flow while respecting the remaining time. Action: I would reproduce the issue at the reported viewport, inspect fixed widths and overflow, and prioritize a focused layout correction. I would ask the teammate to verify the change and check keyboard focus and larger text as well. Result: The illustrative outcome would be a usable application action across the agreed viewports, with lower priority visual refinements recorded for later.",
+        "sampleAnswer": "In a hypothetical demo preparation, a teammate finds the apply button off screen on a small phone. I would reproduce the issue and prioritize the application flow. I would inspect fixed widths, make a focused responsive change, and verify it with the teammate using larger text and keyboard navigation. The intended result would be a usable flow before the demo."
+      },
+      {
+        "id": "fe_responsive_layout",
+        "type": "technical",
+        "text": "How would you create a responsive job-card grid that works from a narrow phone to a desktop and remains usable with zoom and long content?",
+        "concepts": [
+          "CSS Grid",
+          "Flexbox",
+          "box model",
+          "media query",
+          "reflow",
+          "overflow"
+        ],
+        "modelAnswer": "I would start with a single column that fits the available width, then use CSS Grid or Flexbox to introduce additional columns when space allows. Flexible tracks, sensible gaps, and border-box sizing help keep dimensions predictable. Cards should grow with content rather than use a fixed height that clips text. Long titles and links need wrapping, and images need constrained dimensions. I would choose breakpoints based on where content becomes cramped, not specific device brands. Verification would include narrow viewports, browser zoom, larger text, long job titles, and keyboard navigation, checking that essential content reflows without unnecessary horizontal scrolling.",
+        "sampleAnswer": "Illustrative answer: I would build a single column first and add columns with CSS Grid as space permits. Flexible widths, border-box sizing, and wrapping would handle long titles. I would avoid fixed card heights that clip content. I would test narrow screens, zoom, larger text, and keyboard navigation, making sure buttons remain reachable and the page reflows cleanly."
+      }
+    ],
+    "sampleAnswers": [
+      "Illustrative answer: I would use a native form with labels linked to inputs, appropriate autocomplete, and a submit button. React state would hold values and submission status. Validation errors would be textual, connected with aria-describedby, and reflected by aria-invalid. I would keep visible focus and test keyboard submission, tab order, screen reader labels, and failure feedback.",
+      "In a hypothetical review, a menu works with a mouse but fails with a keyboard. I would acknowledge the barrier, reproduce it, and use an appropriate button with clear focus and expanded state. I would test the complete keyboard flow and ask the reviewer to retry. The intended result would be a usable interaction and a shared accessibility checklist."
+    ]
+  },
+  {
+    "id": "marketing_associate",
+    "title": "Marketing Associate",
+    "description": "Create campaigns and drive user growth.",
+    "icon": "megaphone",
+    "color": "#E11D48",
+    "questions": [
+      {
+        "id": "ma_campaign_plan",
+        "type": "technical",
+        "text": "Plan a small campaign to increase registrations for a free campus resume workshop. How would you choose the audience, message, channels, and success measures?",
+        "concepts": [
+          "target audience",
+          "value proposition",
+          "call to action",
+          "channel",
+          "conversion"
+        ],
+        "modelAnswer": "I would define the goal as qualified workshop registrations by a specific date, then learn which students need resume support and what prevents them from attending. The message should state a concrete benefit, eligibility, timing, and a clear registration action. I would choose channels students already use, such as approved club announcements and placement newsletters, and match content to each channel. A simple landing page should explain what attendees receive and ask only for necessary information. I would track registrations, attendance, and channel conversion using consistent tags, then compare results with the goal and adjust the weakest funnel stage.",
+        "sampleAnswer": "Illustrative answer: I would target students preparing for placements and emphasize a practical resume review. The campaign would use approved student channels, a clear date, and one registration action. I would track registrations by channel and actual attendance, not just likes. If many students click but few register, I would inspect the page and form before increasing promotion."
+      },
+      {
+        "id": "ma_underperforming_campaign",
+        "type": "behavioral",
+        "text": "A student event campaign receives many views but few registrations. How would you work with the team to diagnose and improve it?",
+        "concepts": [
+          "funnel",
+          "hypothesis",
+          "collaboration",
+          "prioritization",
+          "measurement"
+        ],
+        "modelAnswer": "Situation: In a hypothetical college club campaign, event posts receive views but registrations remain below the agreed target. Task: I would help the team identify the barrier and improve qualified signups. Action: I would inspect clicks and form completion, review whether the message matches the event page, and ask a few target students what is unclear. If the form is unnecessarily long, I would propose a shorter version and measure completion using the same definitions. Result: The illustrative outcome would be a tested improvement and a clear learning about the barrier, with no claim of success before results are observed.",
+        "sampleAnswer": "In a hypothetical club campaign, posts attract views but few students register. I would check clicks, page information, and form completion, then ask target students about confusing details. I would prioritize the strongest evidence, such as an unnecessarily long form, and test a focused change. The intended result would be improved completion and a documented learning supported by measured results."
+      },
+      {
+        "id": "ma_funnel_metrics",
+        "type": "technical",
+        "text": "A hypothetical campaign has 10,000 impressions, 200 clicks, 20 registrations, and 1,000 currency units of spend. Calculate CTR, registration conversion rate, CPC, and cost per registration.",
+        "concepts": [
+          "click-through rate",
+          "conversion rate",
+          "cost per click",
+          "cost per registration",
+          "attribution"
+        ],
+        "modelAnswer": "Click-through rate is clicks divided by impressions, so 200 divided by 10,000 equals 2%. Registration conversion rate, using clicks as the denominator, is 20 divided by 200, or 10%. Cost per click is 1,000 divided by 200, which is 5 currency units. Cost per registration is 1,000 divided by 20, which is 50 currency units. I would state the time period, attribution rules, and whether registrations are unique and valid. These metrics describe different funnel stages; a low click cost does not automatically mean an effective campaign if the registrations are irrelevant or do not lead to attendance.",
+        "sampleAnswer": "Illustrative answer: CTR is 2%, since 200 clicks come from 10,000 impressions. Click-to-registration conversion is 10%. CPC is 5 currency units, and cost per registration is 50. I would confirm the reporting period and attribution rules, check that registrations are valid, and consider attendance quality before deciding whether the campaign performed well."
+      },
+      {
+        "id": "ma_ab_test",
+        "type": "technical",
+        "text": "How would you compare two email subject lines for a campus event without letting a small or unfair test produce an overconfident conclusion?",
+        "concepts": [
+          "A/B test",
+          "randomization",
+          "sample size",
+          "primary metric",
+          "guardrail",
+          "uncertainty"
+        ],
+        "modelAnswer": "I would define a hypothesis and primary outcome before sending, such as registrations per delivered email, then randomly split comparable recipients between the two subject lines. The sender, email body, timing, and destination should remain comparable so the subject line is the main difference. I would choose a planned test duration and sufficient sample size for a meaningful effect rather than stop when one version briefly leads. Unsubscribes could be a guardrail. Open rates can be distorted by email privacy features, so I would interpret them cautiously. Small samples should produce a limited learning with uncertainty, not a confident winner.",
+        "sampleAnswer": "Illustrative answer: I would randomly split a comparable audience and change only the subject line, keeping the sender, body, and timing consistent. I would choose registrations per delivered email as the primary metric and watch unsubscribes. The test would have a planned duration and sample size. With little data, I would report uncertainty rather than declare a strong winner."
+      },
+      {
+        "id": "ma_feedback",
+        "type": "behavioral",
+        "text": "A reviewer says your campaign draft sounds exaggerated and does not suit the audience. How would you respond and revise it?",
+        "concepts": [
+          "feedback",
+          "audience insight",
+          "evidence",
+          "brand voice",
+          "revision"
+        ],
+        "modelAnswer": "Situation: In a hypothetical marketing assignment, a reviewer says a workshop poster overpromises outcomes and uses language unfamiliar to first year students. Task: I would make the message credible and easy for the intended audience to understand. Action: I would ask which claims lack support, review the event's actual offering, and replace exaggerated promises with specific benefits. I would simplify the wording, preserve a clear call to action, and test comprehension with a few students before another review. Result: The illustrative outcome would be an accurate draft, clearer audience understanding, and a documented reason for the revisions.",
+        "sampleAnswer": "In a hypothetical campaign review, my draft is criticized for exaggerated claims. I would ask for specific examples, check the event's actual benefits, and remove promises the team cannot support. I would simplify the language and test it with a few target students. The intended result would be a credible, clearer draft that fits the audience and retains a useful registration action."
+      },
+      {
+        "id": "ma_content_search",
+        "type": "technical",
+        "text": "How would you create a useful search-friendly page for a campus career workshop while keeping the content honest, accessible, and easy to act on?",
+        "concepts": [
+          "search intent",
+          "title",
+          "heading",
+          "alt text",
+          "call to action",
+          "content quality"
+        ],
+        "modelAnswer": "I would start with the questions students actually ask, such as who can attend, what they will learn, and how to register. The page should have a descriptive title, a clear main heading, useful section headings, and accurate event details. I would write natural language that matches the topic instead of repeating keywords mechanically. Images need meaningful alt text when they convey information, and links should describe their destination. A visible registration action and a usable mobile layout reduce friction. I would review clarity and track qualified visits and registrations, while avoiding unsupported promises about career outcomes or search rankings.",
+        "sampleAnswer": "Illustrative answer: I would answer students' questions about eligibility, date, learning outcomes, and registration. A descriptive title and clear headings would make the page easy to scan. I would use natural language, meaningful image alternatives, and descriptive links. A visible registration action and mobile usability would support completion, while honest claims and useful content would guide the page."
+      }
+    ],
+    "sampleAnswers": [
+      "Illustrative answer: I would target students preparing for placements and emphasize a practical resume review. The campaign would use approved student channels, a clear date, and one registration action. I would track registrations by channel and actual attendance, not just likes. If many students click but few register, I would inspect the page and form before increasing promotion.",
+      "In a hypothetical club campaign, posts attract views but few students register. I would check clicks, page information, and form completion, then ask target students about confusing details. I would prioritize the strongest evidence, such as an unnecessarily long form, and test a focused change. The intended result would be improved completion and a documented learning supported by measured results."
+    ]
+  },
+  {
+    "id": "hr_executive",
+    "title": "HR Executive",
+    "description": "Manage people processes and support talent growth.",
+    "icon": "users",
+    "color": "#059669",
+    "questions": [
+      {
+        "id": "hr_recruitment_process",
+        "type": "technical",
+        "text": "Outline a fair recruitment process for a graduate customer support role. How would you clarify the job, screen candidates, and maintain a good candidate experience?",
+        "concepts": [
+          "job description",
+          "screening",
+          "structured interview",
+          "candidate experience",
+          "confidentiality"
+        ],
+        "modelAnswer": "I would clarify the role's responsibilities, required skills, working arrangements, and approved selection criteria with the hiring manager. The job description should distinguish essential requirements from skills that can be learned. Screening would use consistent, role relevant criteria, followed by structured interviews or a short realistic work sample. Candidates should receive clear timelines, accessible instructions, and timely status updates. Assessment notes and personal information should be stored securely with access limited to authorized people. I would document decisions against the criteria, coordinate the approved offer and onboarding steps, and review where candidates encounter unnecessary delays or confusion.",
+        "sampleAnswer": "Illustrative answer: I would agree on essential customer support skills and a clear job description with the manager. Screening and structured interviews would use consistent criteria, supported by a realistic work sample. Candidates would receive clear instructions and timelines. I would keep assessment records confidential, document selection reasons, and coordinate the approved offer and onboarding process."
+      },
+      {
+        "id": "hr_confidentiality_story",
+        "type": "behavioral",
+        "text": "A friend helping with a campus hiring event asks to see candidates' interview notes. How would you handle the request?",
+        "concepts": [
+          "confidentiality",
+          "authorization",
+          "need to know",
+          "secure sharing",
+          "escalation"
+        ],
+        "modelAnswer": "Situation: In a hypothetical campus hiring assignment, a friend volunteering at the event asks for interview notes to satisfy curiosity. Task: I would protect candidate information while supporting legitimate event coordination. Action: I would explain that assessment notes are restricted, check the friend's authorized responsibilities, and offer only the minimum operational information needed through an approved channel. I would seek guidance from the HR supervisor if the request or access rules were unclear, and report any accidental exposure promptly. Result: The illustrative outcome would be protected candidate records, a respectful boundary, and continued coordination without unnecessary disclosure.",
+        "sampleAnswer": "In a hypothetical hiring event, a friend asks to see confidential interview notes. I would explain that access depends on authorization and a legitimate need. I would share only necessary scheduling information through an approved channel, and ask the HR supervisor if the rules were unclear. The intended result would be smooth coordination while keeping candidate assessments protected."
+      },
+      {
+        "id": "hr_interview_bias",
+        "type": "technical",
+        "text": "How would you design a structured fresher interview that evaluates job skills consistently and reduces bias without assuming that a rubric removes all bias?",
+        "concepts": [
+          "structured interview",
+          "competency",
+          "scoring rubric",
+          "bias",
+          "calibration",
+          "evidence"
+        ],
+        "modelAnswer": "I would identify competencies that matter for the role, then prepare comparable questions and a scoring rubric with observable examples for each rating. Interviewers should evaluate evidence from the answer rather than similarity, confidence alone, or unrelated personal characteristics. A realistic task can complement discussion, particularly when candidates lack work experience. Interviewers should score independently before comparing assessments, then calibrate differences using the rubric. I would provide an appropriate route for accessibility needs and keep records confidential. Structure reduces some inconsistency but does not eliminate bias, so I would review patterns and question whether criteria unfairly exclude capable candidates.",
+        "sampleAnswer": "Illustrative answer: I would agree on job relevant competencies, ask comparable questions, and define observable scoring criteria. Interviewers would record evidence and score independently before discussing differences. A realistic task would help freshers demonstrate skills without prior employment. I would support accessibility needs, protect records, and review selection patterns because a structured rubric can reduce inconsistency but cannot guarantee freedom from bias."
+      },
+      {
+        "id": "hr_onboarding",
+        "type": "technical",
+        "text": "What would you include in a new graduate's onboarding checklist, and how would you handle the employee information collected during that process?",
+        "concepts": [
+          "onboarding",
+          "access control",
+          "data minimization",
+          "buddy",
+          "check-in",
+          "secure storage"
+        ],
+        "modelAnswer": "I would organize onboarding around readiness, understanding, and belonging. Before joining, I would confirm approved paperwork, the start date, equipment, and access requests. On the first day, I would cover the role, team introductions, policies, support contacts, and basic security expectations. A buddy and scheduled check-ins can help a graduate ask questions and understand early goals. Personal information should be collected only for an established purpose, stored in approved systems, and accessible only to authorized staff. I would avoid circulating documents through informal groups and follow the organization's retention process. Checklist owners and completion dates make follow up reliable.",
+        "sampleAnswer": "Illustrative answer: I would confirm paperwork, equipment, access, and the joining schedule before day one. Onboarding would include team introductions, role expectations, policies, a buddy, and planned check-ins. I would collect only necessary employee information and use approved secure systems with restricted access. Clear checklist owners would help resolve missing items and give the graduate a dependable start."
+      },
+      {
+        "id": "hr_conflict_story",
+        "type": "behavioral",
+        "text": "Two student coordinators bring you a disagreement affecting a recruitment event. How would you listen, stay neutral, and handle sensitive information?",
+        "concepts": [
+          "active listening",
+          "neutrality",
+          "conflict resolution",
+          "confidentiality",
+          "escalation"
+        ],
+        "modelAnswer": "Situation: In a hypothetical recruitment event, two student coordinators disagree about shift allocation and the discussion disrupts preparation. Task: I would help restore coordination while treating both people fairly. Action: I would hear each account privately, separate observed facts from assumptions, and explain that information would be shared only as necessary with appropriate people. I would review the allocation criteria, facilitate a practical agreement, and document responsibilities and follow up. Any serious concern outside my authority would go to the designated supervisor. Result: The illustrative outcome would be a clear event plan and respectful handling of the disagreement.",
+        "sampleAnswer": "In a hypothetical event, two coordinators disagree about shifts. I would listen privately, clarify facts, and review the agreed allocation rules without taking sides. I would explain the limits of confidentiality, help define a fair plan, and document responsibilities. If the concern exceeded my role, I would involve the designated supervisor. The intended result would be restored coordination and respectful treatment."
+      },
+      {
+        "id": "hr_people_metrics",
+        "type": "technical",
+        "text": "Which basic recruitment and employee metrics would you track as a junior HR executive, and how would you report them without exposing individuals or misleading managers?",
+        "concepts": [
+          "time to fill",
+          "offer acceptance",
+          "turnover",
+          "denominator",
+          "aggregation",
+          "privacy"
+        ],
+        "modelAnswer": "I would track time to fill, offer acceptance rate, recruitment stage conversion, and employee turnover using agreed definitions. For example, offer acceptance rate is accepted offers divided by offers issued in the defined reporting group, with pending outcomes handled consistently. Turnover needs a stated period and a clearly defined headcount denominator. I would check data completeness and avoid comparing unlike roles or very different hiring periods. Reports should use appropriate aggregation, restrict access, and avoid small groups that reveal individuals. Metrics should prompt questions about process and experience, rather than become unsupported judgments about particular employees or recruiters.",
+        "sampleAnswer": "Illustrative answer: I would track time to fill, offer acceptance, stage conversion, and turnover with clear reporting periods and denominators. Pending offers and missing records would be handled consistently. I would compare similar roles, use aggregated reports, and avoid small groups that expose individuals. The figures would support investigation of delays or experience problems, with context rather than unsupported personal judgments."
+      }
+    ],
+    "sampleAnswers": [
+      "Illustrative answer: I would agree on essential customer support skills and a clear job description with the manager. Screening and structured interviews would use consistent criteria, supported by a realistic work sample. Candidates would receive clear instructions and timelines. I would keep assessment records confidential, document selection reasons, and coordinate the approved offer and onboarding process.",
+      "In a hypothetical hiring event, a friend asks to see confidential interview notes. I would explain that access depends on authorization and a legitimate need. I would share only necessary scheduling information through an approved channel, and ask the HR supervisor if the rules were unclear. The intended result would be smooth coordination while keeping candidate assessments protected."
+    ]
+  }
+]
